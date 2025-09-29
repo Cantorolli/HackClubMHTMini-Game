@@ -9,6 +9,7 @@ The game is rather basic, it features:
 - HP system that gives you 2 chances to mess up
 - Goes presumably forever (unsure if I was supposed to account for int limit)
 - A Khezu from the hit series Monster Hunter
+- Only needs two buttons! (M1 and Space)
 
 Art and Code was done by yours truly,
 Monster Hunter&trade; on the other hand belongs to Capcom&trade; and I have no rights over it.
