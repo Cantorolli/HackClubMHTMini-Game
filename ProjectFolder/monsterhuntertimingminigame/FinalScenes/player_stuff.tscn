@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://de0e6tvgg8y0f"]
+
+[ext_resource type="Script" uid="uid://cvb40lwgfmnsr" path="res://FinalScenes/player_stuff.gd" id="1_i3veb"]
+[ext_resource type="Texture2D" uid="uid://c366xukkl1qne" path="res://Textures/PlayerMAIN.png" id="2_nlk3e"]
+[ext_resource type="Texture2D" uid="uid://d2u5ks1kkusak" path="res://Textures/PlayerArmBOTTOM.png" id="3_um4yg"]
+[ext_resource type="Texture2D" uid="uid://bn7omxccrhsla" path="res://Textures/PlayerArmTOP.png" id="4_yjw13"]
+
+[node name="PlayerStuff" type="Node2D"]
+script = ExtResource("1_i3veb")
+
+[node name="MiddleSprite" type="Sprite2D" parent="."]
+z_index = 1
+texture_filter = 1
+texture = ExtResource("2_nlk3e")
+
+[node name="ArmHinge" type="Node2D" parent="."]
+position = Vector2(13, 25)
+
+[node name="LowSprite" type="Sprite2D" parent="ArmHinge"]
+texture_filter = 1
+position = Vector2(-15, -20)
+texture = ExtResource("3_um4yg")
+
+[node name="TopSprite" type="Sprite2D" parent="ArmHinge"]
+z_index = 1
+texture_filter = 1
+position = Vector2(-15, -20)
+texture = ExtResource("4_yjw13")

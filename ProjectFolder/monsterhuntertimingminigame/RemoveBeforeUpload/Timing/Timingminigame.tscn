@@ -1,0 +1,141 @@
+[gd_scene load_steps=9 format=3 uid="uid://cgl80ojyiv3vd"]
+
+[ext_resource type="Script" uid="uid://iyp5j7kmr7f7" path="res://RemoveBeforeUpload/Timing/basicattempt.gd" id="1_5cyau"]
+[ext_resource type="Script" uid="uid://wri76cn3qn6s" path="res://RemoveBeforeUpload/Timing/arugood.gd" id="2_tc73l"]
+[ext_resource type="Texture2D" uid="uid://bxt1weykoqxwb" path="res://Textures/circle.png" id="4_8riyp"]
+[ext_resource type="Shader" uid="uid://b3qx2inksygqj" path="res://BetaMechanics/circlemoving.gdshader" id="4_omc0x"]
+[ext_resource type="PackedScene" uid="uid://de0e6tvgg8y0f" path="res://FinalScenes/player_stuff.tscn" id="5_8riyp"]
+
+[sub_resource type="Shader" id="Shader_3ka40"]
+code = "shader_type canvas_item;
+
+//uniform vec4 coloradditive: source_color;
+//void fragment() {
+	//vec4 colors = texture(TEXTURE, UV);
+	//float quickref = ((colors.r + colors.g + colors.b)/3.0);
+	//vec4 values = vec4(quickref,quickref,quickref,colors.a/2.0);
+	//COLOR = values*coloradditive;
+//}
+
+uniform vec4 coloradditive: source_color;
+uniform vec4 color1 : source_color;
+uniform vec4 color2 : source_color;
+uniform float threshold;
+uniform float intensity;
+uniform float opacity;
+uniform vec4 glow_color : source_color;
+
+void fragment() {
+	// Get the pixel color from the texture
+	vec4 pixel_color = texture(TEXTURE, UV);
+
+	// Calculate the distance between the pixel color and the first source color
+	float distance = length(pixel_color - color1);
+
+	// Calculate the distance between the pixel color and the second source color
+	float distance_second = length(pixel_color - color2);
+
+	// Create a new variable to store the modified glow color
+	vec4 modified_glow_color = glow_color;
+
+	// Set the alpha value of the modified glow color to the specified opacity
+	modified_glow_color.a = opacity;
+
+	// If the distance to either source color is below the threshold, set the output color to a blend of the pixel color and the modified glow color
+	if (distance < threshold || distance_second < threshold) {
+		COLOR = mix(pixel_color, modified_glow_color * intensity, modified_glow_color.a);
+	}
+	// Otherwise, set the output color to the pixel color
+	else {
+		COLOR = pixel_color;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yes4c"]
+shader = SubResource("Shader_3ka40")
+shader_parameter/coloradditive = Color(0.45098, 0.45098, 0.45098, 1)
+shader_parameter/color1 = Color(0, 0, 0, 1)
+shader_parameter/color2 = Color(0, 0, 0, 1)
+shader_parameter/threshold = 0.0
+shader_parameter/intensity = 0.0
+shader_parameter/opacity = 0.0
+shader_parameter/glow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_omc0x"]
+shader = ExtResource("4_omc0x")
+shader_parameter/coloradditive = Color(0.235502, 4.79743e-05, 0.244367, 1)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -576.0
+offset_top = -324.0
+offset_right = 576.0
+offset_bottom = 324.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.244776, 0.244776, 0.244776, 1)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="ZeGlue" type="Node2D" parent="."]
+script = ExtResource("1_5cyau")
+seconds = 7.5
+
+[node name="Timer" type="Timer" parent="ZeGlue"]
+one_shot = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ZeGlue"]
+offset_left = 53.0
+offset_top = -117.0
+offset_right = 255.0
+offset_bottom = 21.0
+theme_override_constants/shadow_outline_size = 0
+text = "0"
+script = ExtResource("2_tc73l")
+metadata/_edit_use_anchors_ = true
+
+[node name="RATING" type="RichTextLabel" parent="ZeGlue"]
+offset_left = -178.0
+offset_top = -217.0
+offset_right = 7.0
+offset_bottom = -177.0
+theme_override_font_sizes/normal_font_size = 26
+text = "NULL"
+
+[node name="VSlider" type="VSlider" parent="."]
+offset_left = 156.0
+offset_top = -46.0
+offset_right = 178.0
+offset_bottom = 45.0
+max_value = 10.0
+step = 0.5
+value = 7.5
+
+[node name="ReferenceRing" type="Sprite2D" parent="."]
+self_modulate = Color(0, 0, 0, 1)
+texture_filter = 1
+material = SubResource("ShaderMaterial_yes4c")
+texture = ExtResource("4_8riyp")
+
+[node name="CircleMoving" type="Sprite2D" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_omc0x")
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("4_8riyp")
+
+[node name="PlayerStuff" parent="." instance=ExtResource("5_8riyp")]
+position = Vector2(-418, 133)
+scale = Vector2(3, 3)

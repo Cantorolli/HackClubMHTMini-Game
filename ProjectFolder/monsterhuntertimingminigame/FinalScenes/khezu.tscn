@@ -1,0 +1,53 @@
+[gd_scene load_steps=6 format=3 uid="uid://djs3uylexigyw"]
+
+[ext_resource type="Texture2D" uid="uid://dgo6yietadubp" path="res://Textures/Khezu/KhezuBody.png" id="1_t6ahr"]
+[ext_resource type="Texture2D" uid="uid://b5vou5214xal3" path="res://Textures/Khezu/KhezuHeadB.png" id="2_nlvrs"]
+[ext_resource type="Texture2D" uid="uid://dooq7paepur08" path="res://Textures/Khezu/KhezuHeadM.png" id="3_au784"]
+[ext_resource type="Texture2D" uid="uid://dr7o6rt53mcv2" path="res://Textures/Khezu/KhezuHeadF.png" id="4_at0mf"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3u2jb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_nlvrs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_au784")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_at0mf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_at0mf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_at0mf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_at0mf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_nlvrs")
+}],
+"loop": true,
+"name": &"Attack",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_nlvrs")
+}],
+"loop": true,
+"name": &"Patient",
+"speed": 1.0
+}]
+
+[node name="Khezu" type="Node2D"]
+
+[node name="KhezuBody" type="Sprite2D" parent="."]
+texture = ExtResource("1_t6ahr")
+
+[node name="KhezuHead" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_3u2jb")
+animation = &"Attack"
+frame_progress = 0.690885

@@ -1,0 +1,111 @@
+[gd_scene load_steps=6 format=3 uid="uid://50nybahexgy6"]
+
+[ext_resource type="Texture2D" uid="uid://rprrxtidsf8y" path="res://Textures/MouscotDisappointed.png" id="1_kjq6r"]
+[ext_resource type="Script" uid="uid://6r2ayqcq2kcn" path="res://FinalScenes/main_menu.gd" id="1_w7eyy"]
+
+[sub_resource type="Animation" id="Animation_w7eyy"]
+resource_name = "fadeout"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect2:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_1c5hs"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect2:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1ou3u"]
+_data = {
+&"RESET": SubResource("Animation_1c5hs"),
+&"fadeout": SubResource("Animation_w7eyy")
+}
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_w7eyy")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.18359, 0.18359, 0.18359, 1)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 38.0
+offset_top = 40.0
+offset_right = 1119.0
+offset_bottom = 224.0
+theme_override_font_sizes/normal_font_size = 60
+text = "A really (really) bad Monster Hunter themed Timing Mingame Game"
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 27.0
+offset_top = 585.0
+offset_right = 1108.0
+offset_bottom = 769.0
+theme_override_font_sizes/normal_font_size = 30
+text = "Art & Code by Cantorolli, Monster Hunter belongs to Capcom."
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 755.0
+offset_top = 258.0
+offset_right = 1075.0
+offset_bottom = 578.0
+texture = ExtResource("1_kjq6r")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+offset_left = 260.0
+offset_top = 350.0
+offset_right = 556.0
+offset_bottom = 436.0
+theme_override_font_sizes/font_size = 30
+text = "Start Game..."
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_1ou3u")
+}
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
